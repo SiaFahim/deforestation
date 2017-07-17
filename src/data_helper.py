@@ -16,7 +16,7 @@ def get_jpeg_data_files_paths():
     :return: The input file paths as list [train_jpeg_dir, test_jpeg_dir, test_jpeg_additional, train_csv_file]
     """
 
-    data_root_folder = "/root/input"
+    data_root_folder = "/home/sia/input"
     train_jpeg_dir = os.path.join(data_root_folder, 'train-jpg')
     test_jpeg_dir = os.path.join(data_root_folder, 'test-jpg')
     test_jpeg_additional = os.path.join(data_root_folder, 'test-jpg-additional')

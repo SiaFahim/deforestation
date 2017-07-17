@@ -30,29 +30,34 @@ class AmazonKerasClassifier:
         self.losses = []
         self.classifier = Sequential()
 
-    def add_conv_layer(self, img_size=(32, 32), img_channels=3):
+    def add_conv_layer(self, img_size=(128, 128), img_channels=3):
         self.classifier.add(BatchNormalization(input_shape=(*img_size, img_channels)))
         
-        self.classifier.add(Conv2D(32, (3, 3), padding='same', activation='relu'))
-        self.classifier.add(Conv2D(32, (3, 3), activation='relu'))
-        self.classifier.add(AveragePooling2D(pool_size=2))
-        self.classifier.add(Dropout(0.25))
-        
-        self.classifier.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
-        self.classifier.add(Conv2D(64, (3, 3), activation='relu'))
-        self.classifier.add(AveragePooling2D(pool_size=2))
-        self.classifier.add(Dropout(0.25))
-
         self.classifier.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
         self.classifier.add(Conv2D(128, (3, 3), activation='relu'))
         self.classifier.add(AveragePooling2D(pool_size=2))
-        self.classifier.add(Dropout(0.25))
-
+        self.classifier.add(Dropout(0.2))
+        
         self.classifier.add(Conv2D(256, (3, 3), padding='same', activation='relu'))
         self.classifier.add(Conv2D(256, (3, 3), activation='relu'))
         self.classifier.add(AveragePooling2D(pool_size=2))
-        self.classifier.add(Dropout(0.25))
-
+        self.classifier.add(Dropout(0.2))
+        
+        self.classifier.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+        self.classifier.add(Conv2D(128, (3, 3), activation='relu'))
+        self.classifier.add(AveragePooling2D(pool_size=2))
+        self.classifier.add(Dropout(0.2))
+        
+        self.classifier.add(Conv2D(256, (3, 3), padding='same', activation='relu'))
+        self.classifier.add(Conv2D(512, (3, 3), activation='relu'))
+        self.classifier.add(AveragePooling2D(pool_size=2))
+        self.classifier.add(Dropout(0.2))
+        
+        self.classifier.add(Conv2D(512, (3, 3), padding='same', activation='relu'))
+        self.classifier.add(Conv2D(512, (3, 3), activation='relu'))
+        self.classifier.add(Conv2D(512, (3, 3), activation='relu'))
+        self.classifier.add(AveragePooling2D(pool_size=2))
+        self.classifier.add(Dropout(0.2))
 
     def add_flatten_layer(self):
         self.classifier.add(Flatten())
@@ -61,7 +66,8 @@ class AmazonKerasClassifier:
     def add_ann_layer(self, output_size):
         self.classifier.add(Dense(512, activation='relu'))
         self.classifier.add(BatchNormalization())
-        self.classifier.add(Dropout(0.5))
+        self.classifier.add(Dense(512, activation='relu'))
+        self.classifier.add(Dropout(0.33))
         self.classifier.add(Dense(output_size, activation='sigmoid'))
 
     def _get_fbeta_score(self, classifier, X_valid, y_valid):
